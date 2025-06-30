@@ -1,0 +1,34 @@
+name: Continuous
+
+on: push
+
+jobs:
+  build:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ ubuntu-latest ] #, macos-15 ]
+        include:
+          - operating-system: ubuntu-latest
+            system: linux
+            clang: sudo apt install llvm
+          # - operating-system: macos-15
+          #   system: darwin
+          #   clang: brew install llvm
+
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@main
+      - name: Set up JDK 21 for x64
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          architecture: x64
+      - name: Set up Clang
+        run: ${{ matrix.clang }}
+      - name: Install LuaJIT
+        run: git clone https://github.com/LuaJIT/LuaJIT.git && cd LuaJIT && sudo make install
+      - name: build application
+        run: cd src/build && make 64BITS=yes SYSTEM=${{ matrix.system }} JDK_10_OR_HIGHER=yes JNILIBRARY=yes ADDITIONAL_INCLUDE=${JAVA_HOME}/include/ ADDITIONAL_INCLUDE2=${JAVA_HOME}/include/${{ matrix.system }}/ UNITEXTOOLLOGGERONLY=yes

@@ -2594,7 +2594,7 @@ no_o_files:
 	$(RM) Main_*.o
 	$(CC) *.o $(OPTIONS) $(BUILD_LIB_OPTIONS) -shared -o $(BIN_DIR)/libUnitexJni.$(DYLIBEXT)
 	jar cvf $(BIN_DIR)/UnitexJni.jar -C ../UnitexLibAndJni/ fr/umlv/unitex/jni/UnitexJni.class
-	$(CC) Test_lib.o -L$(BIN_DIR) -Wl,-rpath,. -lUnitexJni $(OPTIONS) $(TEST_LIB_OPTIONS) -o $(BIN_DIR)/Test_lib
+	$(CC) Test_lib.o -L$(BIN_DIR) -Wl,-rpath,. -lUnitexJni $(OPTIONS) $(TEST_LIB_OPTIONS) $(LIBS) -o $(BIN_DIR)/Test_lib
 
 .libunitexstatic: $(OBJS)
 	$(RM) Main_*.o
