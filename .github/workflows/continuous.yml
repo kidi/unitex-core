@@ -32,7 +32,7 @@ jobs:
         run: git clone https://github.com/LuaJIT/LuaJIT.git && cd LuaJIT && sudo make install
       - name: build application
         run: cd src/build && make 64BITS=yes SYSTEM=${{ matrix.system }} JDK_10_OR_HIGHER=yes JNILIBRARY=yes ADDITIONAL_INCLUDE=${JAVA_HOME}/include/ ADDITIONAL_INCLUDE2=${JAVA_HOME}/include/${{ matrix.system }}/ UNITEXTOOLLOGGERONLY=yes
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
-          name: Binary-Unitex
+          name: Binary-Unitex-${{ matrix.system }}
           path: bin
