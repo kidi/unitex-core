@@ -2593,7 +2593,7 @@ no_o_files:
 .libunitexjni: no_o_files $(UNITEX_JNI_OBJS) $(OBJS) Test_lib.o
 	$(RM) Main_*.o
 	$(CC) *.o $(OPTIONS) $(BUILD_LIB_OPTIONS) -shared -o $(BIN_DIR)/libUnitexJni.$(DYLIBEXT)
-	jar cvf $(BIN_DIR)/UnitexJni.jar -C ../UnitexLibAndJni/ fr/umlv/unitex/jni/UnitexJni.class
+	jar cvf $(BIN_DIR)/UnitexJni-$(SYSTEM).jar -C ../UnitexLibAndJni/ fr/umlv/unitex/jni/UnitexJni.class $(BIN_DIR)/libUnitexJni.$(DYLIBEXT)
 	$(CC) Test_lib.o -L$(BIN_DIR) -Wl,-rpath,. -lUnitexJni $(OPTIONS) $(TEST_LIB_OPTIONS) $(LIBS) -o $(BIN_DIR)/Test_lib
 
 .libunitexstatic: $(OBJS)
@@ -2614,7 +2614,7 @@ no_o_files:
 .libunitexjni: no_o_files $(UNITEX_JNI_OBJS) $(UNITEXLIB_IO_OBJS) $(YAML_LINK_OBJS) $(UNITEXLIB_PACK_RUNLOG_OBJS) $(LIBTRE) $(LIBLUAJIT) $(OBJS) Test_lib.o
 	-$(RM) Main_*.o
 	$(CC) *.o -shared -Wl,--export-all-symbols,--kill-at -L"." $(BUILD_LIB_OPTIONS) $(TRE_LINK_LIB) $(ADDITIONAL_LIB1) $(ADDITIONAL_LIB2) -o $(BIN_DIR)/UnitexJni.dll
-	jar cvf $(BIN_DIR)/UnitexJni.jar -C ../UnitexLibAndJni/ fr/umlv/unitex/jni/UnitexJni.class
+	jar cvf $(BIN_DIR)/UnitexJni-windows.jar -C ../UnitexLibAndJni/ fr/umlv/unitex/jni/UnitexJni.class $(BIN_DIR)/UnitexJni.dll
 	$(CC) Test_lib.o $(OPTIONS) $(TEST_LIB_OPTIONS) $(BIN_DIR)/UnitexJni.dll -o $(BIN_DIR)/Test_lib.exe
 
 .libunitexstatic: $(UNITEXLIB_IO_OBJS) $(YAML_LINK_OBJS) $(UNITEXLIB_PACK_RUNLOG_OBJS) $(OBJS)
